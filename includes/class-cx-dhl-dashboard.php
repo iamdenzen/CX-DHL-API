@@ -85,29 +85,29 @@ class CX_DHL_Dashboard {
 			Bestelldetails
 		</h3>
 
-		<input type="text" name="cx_billingNumber" id="billingNumber" placeholder="Rechnungsnummer" <?= cx_default('billingNumber'); ?>>
-		<input type="text" name="cx_refNo" id="refNo" placeholder="Ref.-Nr." <?= cx_default('refNo'); ?>>
+		<input type="text" name="cx_billingNumber" id="billingNumber" placeholder="Rechnungsnummer" <?= $this->cx_default('billingNumber'); ?>>
+		<input type="text" name="cx_refNo" id="refNo" placeholder="Ref.-Nr." <?= $this->cx_default('refNo'); ?>>
 
 		<h3>
 			Empfängerinformationen
 		</h3>
 
-		<input type="text" name="cx_name" id="name" placeholder="Name" <?= cx_default('name1'); ?>>
-		<input type="text" name="cx_addressStreet" id="addressStreet" placeholder="Straßenadresse" <?= cx_default('addressStreet'); ?>>
-		<input type="text" name="cx_city" id="city" placeholder="Stadt" <?= cx_default('city'); ?>>
-		<input type="text" name="cx_postalCode" id="postalCode" placeholder="Plz" <?= cx_default('postalCode'); ?>>
-		<input type="email" name="cx_email" id="email" placeholder="E-Mail" <?= cx_default('email'); ?>>
-		<input type="text" name="cx_phone" id="phone" placeholder="Telefon" <?= cx_default('phone'); ?>>
+		<input type="text" name="cx_name" id="name" placeholder="Name" <?= $this->cx_default('name1'); ?>>
+		<input type="text" name="cx_addressStreet" id="addressStreet" placeholder="Straßenadresse" <?= $this->cx_default('addressStreet'); ?>>
+		<input type="text" name="cx_city" id="city" placeholder="Stadt" <?= $this->cx_default('city'); ?>>
+		<input type="text" name="cx_postalCode" id="postalCode" placeholder="Plz" <?= $this->cx_default('postalCode'); ?>>
+		<input type="email" name="cx_email" id="email" placeholder="E-Mail" <?= $this->cx_default('email'); ?>>
+		<input type="text" name="cx_phone" id="phone" placeholder="Telefon" <?= $this->cx_default('phone'); ?>>
 
 		<h3>
 			Weitere Details
 		</h3>
 
 		<div class="cx-group">
-			<input type="number" name="cx_height" id="height" placeholder="Pakethöhe (mm)" max="10000" min="1" <?= cx_default('height'); ?>>
-			<input type="number" name="cx_length" id="length" placeholder="Paketlänge (mm)" max="10000" min="1" <?= cx_default('length'); ?>>
-			<input type="number" name="cx_width" id="width" placeholder="Paketbreite (mm)" max="10000" min="1" <?= cx_default('width'); ?>>
-			<input type="number" name="cx_weight" id="weight" placeholder="Paketgewicht (g)" max="10000" min="1" <?= cx_default('weight'); ?>>
+			<input type="number" name="cx_height" id="height" placeholder="Pakethöhe (mm)" max="10000" min="1" <?= $this->cx_default('height'); ?>>
+			<input type="number" name="cx_length" id="length" placeholder="Paketlänge (mm)" max="10000" min="1" <?= $this->cx_default('length'); ?>>
+			<input type="number" name="cx_width" id="width" placeholder="Paketbreite (mm)" max="10000" min="1" <?= $this->cx_default('width'); ?>>
+			<input type="number" name="cx_weight" id="weight" placeholder="Paketgewicht (g)" max="10000" min="1" <?= $this->cx_default('weight'); ?>>
 		</div>
 
 		<div class="cx-form-footer">
@@ -262,17 +262,14 @@ class CX_DHL_Dashboard {
 
 		return ob_get_clean();
 	}
-}
 
-/**
- * Prefills a dashboard form field with the value just POSTed to it, so a
- * failed submission doesn't wipe what the visitor typed. This function was
- * referenced by the dashboard markup but never defined anywhere in the
- * plugin or (as far as this codebase shows) the theme - guarded so any
- * existing definition elsewhere still wins untouched.
- */
-if (!function_exists('cx_default')) {
-	function cx_default($field) {
+	/**
+	 * Prefills a dashboard form field with the value just POSTed to it, so a
+	 * failed submission doesn't wipe what the visitor typed. Kept as a
+	 * private method (rather than a global function) so it can't collide
+	 * with an unrelated cx_default() defined by a theme or another plugin.
+	 */
+	private function cx_default($field) {
 		$post_key_map = [
 			'name1' => 'name',
 		];
